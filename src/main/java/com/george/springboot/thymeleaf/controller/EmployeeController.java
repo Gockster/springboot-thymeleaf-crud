@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.george.springboot.thymeleaf.entity.Employee;
 //import com.george.springboot.thymeleaf.service.EmployeeService;
@@ -46,6 +47,28 @@ public class EmployeeController {
 		
 		return "employees/employee-form";
 	}
+	
+	
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("employeeId") int theId,
+			Model theModel) {
+		
+		//get the employee from the service
+		Employee theEmployee = employeeService.findById(theId);
+		
+		//set employee as a model aatribute to prepopulate the form
+		theModel.addAttribute("employee", theEmployee);
+		
+		//send over to our form
+		return "employees/employee-form";
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	@PostMapping("/save")
 	public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
